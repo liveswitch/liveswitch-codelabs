@@ -24,16 +24,16 @@ namespace HelloWorld
     public partial class MainWindow : Window
     {
         
-        private readonly HelloWorldLogicFile _App;
+        private readonly HelloWorldLogic _App;
         
 		// <Broadcast>
-        private Participant _Client;
+        //private Participant _Client;
         // </Broadcast>
         public MainWindow()
         {
             
-            this.DataContext = HelloWorldLogicFile.Instance;
-            this._App = HelloWorldLogicFile.Instance;
+            this.DataContext = HelloWorldLogic.Instance;
+            this._App = HelloWorldLogic.Instance;
             
 
             _App.DisplayMessage = (msg) =>
@@ -69,10 +69,10 @@ namespace HelloWorld
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // <Leaving>
-            _App.LeaveAsync()?.Fail((exception) =>
-            {
-                Log.Error("Failed to leave conference");
-            });
+            //_App.LeaveAsync()?.Fail((exception) =>
+            //{
+            //    Log.Error("Failed to leave conference");
+            //});
             // </Leaving>
 
             // <Stop Local Media>
