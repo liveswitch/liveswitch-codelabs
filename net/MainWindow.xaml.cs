@@ -68,12 +68,12 @@ namespace HelloWorld
         // Where we should stop our app, which is hooked on our xaml
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            // <Leaving>
+            // <Unregistered>
             //_App.LeaveAsync()?.Fail((exception) =>
             //{
             //    Log.Error("Failed to leave conference");
             //});
-            // </Leaving>
+            // </Unregistered>
 
             // <Stop Local Media>
             // if (_App.LocalMedia != null)
