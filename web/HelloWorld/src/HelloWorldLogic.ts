@@ -17,8 +17,6 @@
         // </SingletonPattern>
 
         private applicationId: string = Config.applicationId;
-        private userId: string = Config.userId;
-        private deviceId: string = Config.deviceId;
         private channelId: string = Config.channelId;
         private gatewayUrl: string = Config.gatewayUrl;
         private sharedSecret: string = Config.sharedSecret;

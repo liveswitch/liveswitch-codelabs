@@ -1,5 +1,3 @@
 ﻿namespace HelloWorld {
-    // <Participant>
-    
-   // </Participant>
+
 }
