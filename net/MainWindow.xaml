@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HelloWorld"
         xmlns:WPF="clr-namespace:HelloWorld"
         mc:Ignorable="d"
-        Title="MainWindow" Height="525" Width="800" Closing="Window_Closing" Loaded="Window_Loaded">
+        Title="MainWindow" Height="525" Width="800" Closing="Window_Closing">
     <Grid Height="500" Width="800" VerticalAlignment="Top" Margin="0,0,-8,-91">
         <Canvas x:Name="videoContainer" Margin="1,1,300,194" Background="Black"/>
         <TextBox x:Name="textContainer" Margin="505,1,10,105" Background="white" TextWrapping="Wrap" IsReadOnly="True"/>

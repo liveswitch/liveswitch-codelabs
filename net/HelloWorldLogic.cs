@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace HelloWorld
@@ -19,21 +15,21 @@ namespace HelloWorld
         public Action2<string, byte[]> SaveFile;
 
         #region Singleton
-        private static HelloWorldLogic Context;
+        private static HelloWorldLogic _Context;
 
         public static HelloWorldLogic Instance
         {
             get
             {
-                if(Context == null)
+                if (_Context == null)
                 {
-                    Context = new HelloWorldLogic();
+                    _Context = new HelloWorldLogic();
                 }
-                return Context;
+                return _Context;
             }
         }
         #endregion
-        
+
         public string ApplicationId = Config.ApplicationId;
         public string UserId = Config.UserId;
         public string DeviceId = Config.DeviceId;

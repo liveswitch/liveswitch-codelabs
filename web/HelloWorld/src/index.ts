@@ -30,14 +30,14 @@
         }
     }
     
-    // <Start Local Media>
+    
     const joinBtn: HTMLButtonElement = document.getElementById("join-btn") as HTMLButtonElement;
     const leaveBtn: HTMLButtonElement = document.getElementById("leave-btn") as HTMLButtonElement;
 
     joinBtn.onclick = () => {
-        // Start capturing local media.
-        //app.startLocalMedia().then(() => {
-            // Load the lists of available devices.
+        // <Start Local Media>
+           //app.startLocalMedia().then(() => {
+        // </Start Local Media>
             loadInputs();
 
             // Create and register the client.
@@ -45,32 +45,32 @@
                 joinBtn.style.display = "none";
                 leaveBtn.style.display = "inline-block";
             });
-        //});
+        // <Start Local Media>
+           //});
+        // </Start Local Media>
     };
 
     leaveBtn.onclick = () => {
-        // Stop capturing local media.
-        //app.stopLocalMedia().then(() => {
-        // <Unregister>
-            // Unregister the client.
+        // <Stop Local Media>
+           //app.stopLocalMedia().then(() => {
+        // </Stop Local Media>
+        // <Unregister>             
             //app.leaveAsync().then(() => {
-            //     Clear the lists of available devices.
             //    clearInputs();
             //    joinBtn.style.display = "inline-block";
             //    leaveBtn.style.display = "none";
             //});
         // </Unregister>
-        //});
+         // <Stop Local Media>
+           //});
+        // </Stop Local Media>
     };
-    // </Start Local Media>
+    
     	
     // <Share Screen>
     //const screenShareToggleBtn: HTMLButtonElement = document.getElementById("screenshare-toggle-btn") as HTMLButtonElement;
-
     //screenShareToggleBtn.onclick = () => app.toggleScreenSharing();
-
     //app.localScreenMedia.addOnVideoStarted(() => {
-    //    // Listen for the broswer's "stop sharing" button.
     //    app.localScreenMedia.getVideoTrack().addOnStopped(() => {
     //        app.toggleScreenSharing();
     //    });
@@ -120,7 +120,6 @@
     //broadcastBtn.onclick = () => startAs(new HelloWorld.Broadcaster());
     //receiveBtn.onclick = () => startAs(new HelloWorld.Receiver());
 
-    // Start as broadcaster or receiver.
     //function startAs(participant: HelloWorld.Participant) {
     //    // Start capturing local media (broadcaster only).
     //    participant.start().then(() => {
@@ -134,7 +133,7 @@
     //}
     // </broadcast>
 
-	// <Muting Streams>
+	// <Mute Streams>
     //const muteAudioBtn: HTMLButtonElement = document.getElementById("mute-audio-btn") as HTMLButtonElement;
     //const muteVideoBtn: HTMLButtonElement = document.getElementById("mute-video-btn") as HTMLButtonElement;
 
@@ -162,11 +161,10 @@
     //    app.toggleDisableRemoteVideo();
     //    disableRemoteVideoBtn.innerText = (disableRemoteVideoBtn.innerText.indexOf("Disable") !== -1) ? "Enable Remote Video" : "Disable Remote Video";
     //};
-	// <Muting Streams>
+	// <Mute Streams>
 	
     function loadInputs() {
 		// <Change Devices>
-        // Set up the list of available audio input devices.
         //app.getAudioInputs().then(audioInputs => {
         //    const selectBox: HTMLSelectElement = document.getElementById("audioInputs") as HTMLSelectElement;
         //    for (const input of audioInputs) {
@@ -177,7 +175,6 @@
         //    selectBox.onchange = () => app.setAudioInput(audioInputs[selectBox.selectedIndex]);
         //});
 
-        // Set up the list of available video input devices.
         //app.getVideoInputs().then(videoInputs => {
         //    const selectBox: HTMLSelectElement = document.getElementById("videoInputs") as HTMLSelectElement;
         //    for (const input of videoInputs) {
@@ -188,7 +185,6 @@
         //    selectBox.onchange = () => app.setVideoInput(videoInputs[selectBox.selectedIndex]);
         //});
 
-        // Set up the list of available audio output devices.
         //app.getAudioOutputs().then(audioOutputs => {
         //    const selectBox: HTMLSelectElement = document.getElementById("audioOutputs") as HTMLSelectElement;
         //    for (const output of audioOutputs) {

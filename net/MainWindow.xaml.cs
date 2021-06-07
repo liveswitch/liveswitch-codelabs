@@ -23,18 +23,19 @@ namespace HelloWorld
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        // <AppInstance>
         private readonly HelloWorldLogic _App;
-        
-		// <Broadcast>
+        // </AppInstance>
+		// <Broadcaster>
         //private Participant _Client;
-        // </Broadcast>
+		// </Broadcaster>
+
         public MainWindow()
         {
-            
+            // <AppInstance>
             this.DataContext = HelloWorldLogic.Instance;
             this._App = HelloWorldLogic.Instance;
-            
+            // </AppInstance>
 
             _App.DisplayMessage = (msg) =>
             {
@@ -45,21 +46,21 @@ namespace HelloWorld
             };
 
             _App.SaveFile = (fileName, dataBytes) =>
-            {
-                
-                Thread thread = new Thread(() =>
-                {
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        var result = MessageBox.Show($"You've received a file from this channel, do you wish to download {fileName}?", "Download File", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                        if (result == MessageBoxResult.Yes)
-                        {
-                            PromptSaveFile(fileName, dataBytes);
-                        }
-                    });
-                });
-                thread.Start();
-                
+            {              
+            //    Thread thread = new Thread(() =>
+            //    {
+            //        this.Dispatcher.Invoke(() =>
+            //        {
+            //            var result = MessageBox.Show($"You've received a file from this channel, do you wish to download {fileName}?", "Download File", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            //            if (result == MessageBoxResult.Yes)
+            //            {
+            //                PromptSaveFile(fileName, dataBytes);
+            //            }
+            //        });
+            //    });
+            //    thread.Start();
+            //};
+               
             };
 
             InitializeComponent();
@@ -69,10 +70,11 @@ namespace HelloWorld
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // <Unregistered>
-            //_App.LeaveAsync()?.Fail((exception) =>
-            //{
-            //    Log.Error("Failed to leave conference");
-            //});
+            // _App.LeaveAsync()?.Fail((ex) =>
+            // {
+            //     Log.Error("Failed to leave conference.");
+            //     Alert(ex.Message);
+            // });
             // </Unregistered>
 
             // <Stop Local Media>
@@ -80,24 +82,22 @@ namespace HelloWorld
             // {
             //     _App.StopLocalMedia().Then(p =>
             //     {
-            //         Log.Info("Successfully stopped local media");
-            //     }).Fail((exception) =>
+            //         Log.Info("Successfully stopped local media.");
+            //     }).Fail((ex) =>
             //     {
-            //         Log.Error("Could not stop local media");
+            //         Log.Error("Could not stop local media.");
+            //         Alert(ex.Message);
             //     });
             // }
             // </Stop Local Media>
-
-            // <Broadcast>
+			
+			// <Broadcaster>
             // if (_Client != null)
             // {
             //     _Client.Stop();
             // }
-            // </Broadcast>
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+			// </Broadcaster>
+            
         }
 
         private void SendMessage_Click(object sender, RoutedEventArgs e)
@@ -111,7 +111,7 @@ namespace HelloWorld
 
         private void UploadFile_Click(object sender, RoutedEventArgs e)
         {
-            // <File Transfer>
+            // <FileTransfer>
             // Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
             // if (openFileDialog.ShowDialog() == true)
@@ -122,12 +122,12 @@ namespace HelloWorld
             //     _App.SendFile(fileInfo.Name, fileBytes);
             //     MessageBox.Show($"You've sent {fileInfo.Name} to the channel!");
             // }
-            // </File Transfer>
+            // </FileTransfer>
         }
 
         private void PromptSaveFile(string fileName, byte[] dataBytes)
         {
-            // <FileTransfer>
+            
             string[] tokens = fileName.Split('.');
             fileName = tokens[0];
             for (var i = 1; i < tokens.Length - 1; i++)
@@ -136,7 +136,8 @@ namespace HelloWorld
             }
             string fileExtension = (tokens.Length <= 1) ? "*" : tokens[tokens.Length - 1];
 
-            this.Dispatcher.Invoke((Action)(() => {
+            this.Dispatcher.Invoke(() =>
+            {
                 System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 
                 saveFileDialog.OverwritePrompt = true;
@@ -151,8 +152,8 @@ namespace HelloWorld
                         fileStream.Write(dataBytes, 0, dataBytes.Length);
                     }
                 }
-            }));
-            // </FileTransfer>
+            });
+            
         }
 
         private void Join_Click(object sender, RoutedEventArgs e)
@@ -161,24 +162,27 @@ namespace HelloWorld
             // _App.StartLocalMedia(this).Then((result) =>
             // {
             //     LoadInputs();
+
             // </Start Local Media>
-                // <Joining>
-                _App.JoinAsync().Then((res) => {
-                    Dispatcher.Invoke(() =>
-                    {
-                        join.Visibility = Visibility.Collapsed;
-                        leave.Visibility = Visibility.Visible;
-                    });
+            // <Joining>
+            _App.JoinAsync().Then((res) => {
+                Dispatcher.Invoke(() =>
+                {
+                    join.Visibility = Visibility.Collapsed;
+                    leave.Visibility = Visibility.Visible;
                 });
-                // <Joining>
+            });
+            // <Joining>
             // <Start Local Media>
-            // }, (exception) =>
-            //         {
-            //             Log.Info("Could not start local media.");
-            //         }
-            // ).Fail((exception) =>
+            // }, (ex) =>
+            //     {
+            //         Log.Info("Could not start local media.");
+            //         Alert(ex.Message);
+            //     }
+            // ).Fail((ex) =>
             // {
-            //     Log.Error("Could not join conference");
+            //     Log.Error("Could not join conference.");
+            //     Alert(ex.Message);
             // });
             // </Start Local Media>
         }
@@ -193,9 +197,10 @@ namespace HelloWorld
             //         join.Visibility = Visibility.Visible;
             //         leave.Visibility = Visibility.Collapsed;
             //     });
-            // }).Fail((exception) =>
+            // }).Fail((ex) =>
             // {
-            //     Log.Error("Failed to leave conference");
+            //     Log.Error("Failed to leave conference.");
+            //     Alert(ex.Message);
             // });
             // </Unregistered>
 
@@ -204,10 +209,11 @@ namespace HelloWorld
             // {
             //     _App.StopLocalMedia().Then(p =>
             //     {
-            //         Log.Info("Successfully stopped local media");
-            //     }).Fail((exception) =>
+            //         Log.Info("Successfully stopped local media.");
+            //     }).Fail((ex) =>
             //     {
-            //         Log.Error("Could not stop local media");
+            //         Log.Error("Could not stop local media.");
+            //         Alert(ex.Message);
             //     });
             // }
             // </Stop Local Media>
@@ -215,30 +221,32 @@ namespace HelloWorld
 
         private void JoinReceive_Click(object sender, RoutedEventArgs e)
         {
-            // <Receiver>
+            // <Broadcaster>
             // _Client = Receiver.Instance();
             // _Client.Start(this).Then((result) =>
             // {
             //     _Client.JoinAsync();
-            // }).Fail((exception) =>
+            // }).Fail((ex) =>
             // {
-            //     Log.Error("Unable to start Client");
+            //     Log.Error("Unable to start Client.");
+            //     Alert(ex.Message);
             // });
-            // </Receiver>
+            // </Broadcaster>
         }
 
         private void JoinBroadcast_Click(object sender, RoutedEventArgs e)
         {
-            // <Broadcast>
+            // <Receiver>
             // _Client = Broadcaster.Instance();
             // _Client.Start(this).Then((result) =>
             // {
             //     _Client.JoinAsync();
-            // }).Fail((exception) =>
+            // }).Fail((ex) =>
             // {
-            //     Log.Error("Unable to start Client");
+            //     Log.Error("Unable to start Client.");
+            //     Alert(ex.Message);
             // });
-            // </Broadcast>
+            // </Receiver>
         }
 
         private void ToggleScreenShare_Click(object sender, RoutedEventArgs e)
@@ -250,42 +258,42 @@ namespace HelloWorld
 
         private void MuteAudio_Click(object sender, RoutedEventArgs e)
         {
-            // <MutingStreams>
+            // <Mute Streams>
             // _App.ToggleMuteLocalAudio().Then((r) => {
             //     this.Dispatcher.Invoke(() =>
             //     {
             //         this.muteAudio.Content = (_App.LocalMedia.AudioMuted) ? "Unmute Audio" : "Mute Audio";
             //     });
             // });
-            // </MutingStreams>
+            // </Mute Streams>
         }
 
         private void MuteVideo_Click(object sender, RoutedEventArgs e)
         {
-            // <MutingStreams>
+            // <Mute Streams>
             // _App.ToggleMuteLocalVideo().Then((r) => {
             //     this.Dispatcher.Invoke(() =>
             //     {
             //         this.muteVideo.Content = (_App.LocalMedia.VideoMuted) ? "Unmute Video" : "Mute Video";
             //     });
             // });
-            // </MutingStreams>
+            // </Mute Streams>
         }
 
         private void DisableRemoteAudio_Click(object sender, RoutedEventArgs e)
         {
-            // <MutingStreams>
-            //_App.ToggleDisableRemoteAudio();
-            //this.disableRemoteAudio.Content = (this.disableRemoteAudio.Content.ToString().Contains("Disable")) ? "Enable Remote Audio" : "Disable Remote Audio";
-            // </MutingStreams>
+            // <Mute Stream>
+            // _App.ToggleDisableRemoteAudio();
+            // this.disableRemoteAudio.Content = (this.disableRemoteAudio.Content.ToString().Contains("Disable")) ? "Enable Remote Audio" : "Disable Remote Audio";
+            // </Mute Stream>
         }
 
         private void DisableRemoteVideo_Click(object sender, RoutedEventArgs e)
         {
-            // <MutingStreams>
-            //_App.ToggleDisableRemoteVideo();
-            //this.disableRemoteVideo.Content = (this.disableRemoteVideo.Content.ToString().Contains("Disable")) ? "Enable Remote Video" : "Disable Remote Video";
-            // </MutingStreams>
+            // <Mute Stream>
+            // _App.ToggleDisableRemoteVideo();
+            // this.disableRemoteVideo.Content = (this.disableRemoteVideo.Content.ToString().Contains("Disable")) ? "Enable Remote Video" : "Disable Remote Video";
+            // </Mute Stream>
         }
 
         private void AudioInputs_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -362,11 +370,18 @@ namespace HelloWorld
 
         private void ClearInputs()
         {
-            
-            this.audioInputs.Items.Clear();
-            this.videoInputs.Items.Clear();
-            this.audioOutputs.Items.Clear();
-            
+            // <Change Devices>
+            // this.audioInputs.Items.Clear();
+            // this.videoInputs.Items.Clear();
+            // this.audioOutputs.Items.Clear();
+            // </Change Devices>
+        }
+        public void Alert(string format, params object[] args)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                MessageBox.Show(string.Format(format, args));
+            }));
         }
     }
 }
