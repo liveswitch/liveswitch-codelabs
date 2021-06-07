@@ -1,6 +1,5 @@
 package com.example.application;
 
-
 import android.database.Cursor;
 import android.provider.OpenableColumns;
 
@@ -15,36 +14,31 @@ import fm.liveswitch.Log;
 
 final public class FileTransferHelper {
 
-    private FileTransferHelper() {}
+    private FileTransferHelper() {
+    }
 
-    /*
-        Getting file bytes from the file input stream
-     */
+    // Getting file bytes from the file input stream.
     public static byte[] getFileBytes(InputStream inputStream) {
         byte[] fileBytes = null;
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
+        byte[] buffer = new byte[1024];
 
         // From: https://stackoverflow.com/questions/10296734/image-uri-to-bytesarray
         try {
-            int len = 0;
-            while((len = inputStream.read(buffer)) != -1){
+            int len;
+            while ((len = inputStream.read(buffer)) != -1) {
                 byteBuffer.write(buffer, 0, len);
             }
             fileBytes = byteBuffer.toByteArray();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.error(e.getStackTrace().toString());
-        }
-        finally {
+        } catch (Exception ex) {
+            Log.error(Arrays.toString(ex.getStackTrace()));
+
+        } finally {
             try {
                 byteBuffer.close();
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                Log.error(e.getStackTrace().toString());
+            } catch (Exception ex) {
+                Log.error(Arrays.toString(ex.getStackTrace()));
             }
         }
         return fileBytes;
@@ -61,25 +55,20 @@ final public class FileTransferHelper {
     public static String getFileName(Cursor fileCursor) {
         int nameIndex = fileCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
         fileCursor.moveToFirst();
-        String name = fileCursor.getString(nameIndex);
-        return name;
+        return fileCursor.getString(nameIndex);
     }
 
     public static byte[] getFileNameSizeInBytes(Cursor fileCursor) {
-        String name = getFileName(fileCursor);
-        int size = name.length();
-
-        return ByteBuffer.
-                allocate(4).
-                order(ByteOrder.BIG_ENDIAN).
-                putInt(size).
-                array();
+        int size = getFileName(fileCursor).length();
+        return ByteBuffer
+                .allocate(4)
+                .order(ByteOrder.BIG_ENDIAN)
+                .putInt(size)
+                .array();
     }
 
-
     public static byte[] getFileNameInBytes(Cursor fileCursor) {
-        String name = getFileName(fileCursor);
-        return name.getBytes(StandardCharsets.US_ASCII);
+        return getFileName(fileCursor).getBytes(StandardCharsets.US_ASCII);
     }
 
     /*
@@ -94,7 +83,8 @@ final public class FileTransferHelper {
 
     public static int getIntFromBytes(byte[] bytes, int offset) {
         byte[] intStringSubArray = Arrays.copyOfRange(bytes, offset, bytes.length);
-        return ByteBuffer.wrap(intStringSubArray)
+        return ByteBuffer
+                .wrap(intStringSubArray)
                 .order(ByteOrder.BIG_ENDIAN)
                 .getInt();
     }

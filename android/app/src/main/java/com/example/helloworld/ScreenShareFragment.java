@@ -6,16 +6,15 @@ import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.application.HelloWorldLogic;
-
 
 public class ScreenShareFragment extends Fragment {
 
@@ -23,13 +22,11 @@ public class ScreenShareFragment extends Fragment {
     private static boolean isProjectionReady = false;
 
     public ScreenShareFragment() {
-        // Required empty public constructor
     }
 
     public static ScreenShareFragment newInstance() {
         ScreenShareFragment fragment = new ScreenShareFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        fragment.setArguments(new Bundle());
         return fragment;
     }
 
@@ -39,17 +36,17 @@ public class ScreenShareFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment.
         appInstance = HelloWorldLogic.getInstance(getActivity().getBaseContext());
         Intent intent = new Intent(getActivity().getApplicationContext(), BackgroundService.class);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             getActivity().startForegroundService(intent);
-        }
-        else {
+        } else {
             getActivity().startService(intent);
         }
+
         return inflater.inflate(R.layout.fragment_screen_share, container, false);
     }
 
@@ -62,14 +59,10 @@ public class ScreenShareFragment extends Fragment {
 
     public void setScreenShareClick() {
         Button screenShareButton = (Button) getView().findViewById(R.id.screenShareButton);
-        screenShareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                 appInstance.toggleScreenShare();
-            }
-        });
+//        screenShareButton.setOnClickListener(view -> appInstance.toggleScreenShare());
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Screen Sharing";
@@ -78,16 +71,15 @@ public class ScreenShareFragment extends Fragment {
     private MediaProjectionManager manager;
 
     private void setUpMediaProjection() {
-//        if(!isProjectionReady) {
+//        if (!isProjectionReady) {
 //            manager = (MediaProjectionManager) getActivity().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
 //            Intent screenCaptureIntent = manager.createScreenCaptureIntent();
 //            this.startActivityForResult(screenCaptureIntent, 42);
 //        }
     }
 
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 42 && data != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (requestCode == 42 && data != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             manager = (MediaProjectionManager) getActivity().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
 //            appInstance.setMediaProjection(manager.getMediaProjection(resultCode, data));
             isProjectionReady = true;

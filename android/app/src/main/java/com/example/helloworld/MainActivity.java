@@ -12,7 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.TableRow;
 
@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
         setupAllFragments();
     }
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -59,19 +57,21 @@ public class MainActivity extends AppCompatActivity {
         these can be be found in the "AndroidManifest.xml"
         file in "manifests" folder. This needs to occur
         prior to starting our media as the LiveSwitch SDK
-        needs access to such media
+        needs access to such media.
      */
     private void checkPermissions() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             List<String> requiredPermissions = new ArrayList<>(2);
+
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 requiredPermissions.add(Manifest.permission.RECORD_AUDIO);
             }
+
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 requiredPermissions.add(Manifest.permission.CAMERA);
             }
 
-            if(requiredPermissions.size() != 0) {
+            if (requiredPermissions.size() != 0) {
                 requestPermissions(requiredPermissions.toArray(new String[0]), 1);
             }
         }
@@ -80,15 +80,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 1) {
-            boolean permissionsGranted = true;
-            for(int grantResult : grantResults) {
-                if(grantResult != PackageManager.PERMISSION_GRANTED) {
-                    permissionsGranted = false;
-                }
-            }
-        }
     }
     // </CheckingPermissions>
 
@@ -124,9 +115,11 @@ public class MainActivity extends AppCompatActivity {
     public void removeFragment(int id) {
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragmentToRemove = manager.findFragmentById(id);
-        manager.beginTransaction()
-                .remove(fragmentToRemove)
-                .commit();
+        if (fragmentToRemove != null) {
+            manager.beginTransaction()
+                    .remove(fragmentToRemove)
+                    .commit();
+        }
     }
 
     public void setupAllFragments() {
@@ -140,66 +133,61 @@ public class MainActivity extends AppCompatActivity {
         onFileReceiveFragment = OnFileReceiveFragment.newInstance();
 
         addDefaultVideoButtons();
-        setupAccessoryFragment(broadcastFragment, v ->
+
+        setupAccessoryFragment(broadcastFragment, view ->
                 addBroadcastingButtons()
         );
-        setupAccessoryFragment(deviceSwitchingFragment, v -> {
-                addFragment(deviceSwitchingFragment, R.id.accessoryContainer);
-                addDefaultVideoButtons();
+
+        setupAccessoryFragment(deviceSwitchingFragment, view -> {
+            addFragment(deviceSwitchingFragment, R.id.accessoryContainer);
+            addDefaultVideoButtons();
         });
-        setupAccessoryFragment(screenShareFragment, v -> {
+
+        setupAccessoryFragment(screenShareFragment, view -> {
             addFragment(screenShareFragment, R.id.accessoryContainer);
             addDefaultVideoButtons();
         });
-        setupAccessoryFragment(mutingFragment, v -> {
+
+        setupAccessoryFragment(mutingFragment, view -> {
             addFragment(mutingFragment, R.id.accessoryContainer);
             addDefaultVideoButtons();
         });
-        setupAccessoryFragment(fileSelectionFragment, v -> {
+
+        setupAccessoryFragment(fileSelectionFragment, view -> {
             addFragment(fileSelectionFragment, R.id.accessoryContainer);
             addDefaultVideoButtons();
         });
-        setupAccessoryFragment(textChannelFragment, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textChannelFragment.show(getSupportFragmentManager(), textChannelFragment.toString());
-                addDefaultVideoButtons();
-                addDefaultVideoButtons();
-            }
+
+        setupAccessoryFragment(textChannelFragment, view -> {
+            textChannelFragment.show(getSupportFragmentManager(), textChannelFragment.toString());
+            addDefaultVideoButtons();
         });
 
         // <FileTransfer>
-//        appInstance.setFileReceiveEvent(new HelloWorldLogic.onNewFileReceive() {
-//            @Override
-//            public void invoke() {
-//                onFileReceiveFragment.show(getSupportFragmentManager(), onFileReceiveFragment.toString());
-//            }
-//        });
+//        appInstance.setFileReceiveEvent(() -> onFileReceiveFragment.show(getSupportFragmentManager(), onFileReceiveFragment.toString()));
         // </FileTransfer>
     }
 
     public void addDefaultVideoButtons() {
-        if(!startingFragment.isResumed()){
-            if(broadcastFragment.isResumed()) {
+        if (!startingFragment.isResumed()) {
+            if (broadcastFragment.isResumed()) {
                 broadcastFragment.stop().then(result -> {
                     addFragment(startingFragment, R.id.videoButtons);
                 });
-            }else {
+            } else {
                 addFragment(startingFragment, R.id.videoButtons);
             }
-
         }
     }
 
     public void addBroadcastingButtons() {
-        if(!broadcastFragment.isResumed()){
-            if(startingFragment.isResumed()) {
+        if (!broadcastFragment.isResumed()) {
+            if (startingFragment.isResumed()) {
                 startingFragment.stop().then(result -> {
                     addFragment(broadcastFragment, R.id.videoButtons);
                     removeFragment(R.id.accessoryContainer);
                 });
-            }
-            else {
+            } else {
                 addFragment(broadcastFragment, R.id.videoButtons);
                 removeFragment(R.id.accessoryContainer);
             }

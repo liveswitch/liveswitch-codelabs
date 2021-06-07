@@ -10,22 +10,16 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.example.helloworld.MainActivity;
-import com.example.helloworld.StartingFragment;
-
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-
-import fm.liveswitch.*;
-import fm.liveswitch.android.LayoutManager;
+import java.util.Locale;
 
 
 public class HelloWorldLogic {
-    
-    private Context context;
+
+    private final Context context;
     private final Handler handler;
     private static HelloWorldLogic app;
 
@@ -43,8 +37,6 @@ public class HelloWorldLogic {
     }
 
     private String applicationId = Config.applicationId;
-    private String userId = Config.userId;
-    private String deviceId = Config.deviceId;
     private String channelId = Config.channelId;
     private String gatewayUrl = Config.gatewayUrl;
     private String sharedSecret = Config.sharedSecret;

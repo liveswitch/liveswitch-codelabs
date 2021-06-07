@@ -2,6 +2,7 @@ package com.example.helloworld;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,30 +14,24 @@ import com.example.application.HelloWorldLogic;
 
 public class MutingFragment extends Fragment {
 
-
     HelloWorldLogic appInstance;
 
     public MutingFragment() {
-        // Required empty public constructor
     }
-
 
     public static MutingFragment newInstance() {
         MutingFragment fragment = new MutingFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        fragment.setArguments(new Bundle());
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         appInstance = HelloWorldLogic.getInstance(getActivity().getBaseContext());
         return inflater.inflate(R.layout.fragment_muting, container, false);
     }
@@ -53,35 +48,25 @@ public class MutingFragment extends Fragment {
         Button remoteAudioToggle = getView().findViewById(R.id.remoteAudioToggle);
         Button remoteVideoToggle = getView().findViewById(R.id.remoteVideoToggle);
 
-        localAudioToggle.setOnClickListener(v -> {
+        localAudioToggle.setOnClickListener(view -> {
 //            localAudioToggle.setClickable(false);
 //            appInstance.toggleMuteLocalAudio().then(result -> {
-//                getActivity().runOnUiThread(() -> {
-//                    localAudioToggle
-//                            .setClickable(true);
-//                });
+//                getActivity().runOnUiThread(() -> localAudioToggle.setClickable(true));
 //            });
         });
 
-        localVideoToggle.setOnClickListener(v -> {
+        localVideoToggle.setOnClickListener(view -> {
 //            localVideoToggle.setClickable(false);
 //            appInstance.toggleMuteLocalVideo().then(result -> {
-//               getActivity().runOnUiThread(() -> {
-//                   localVideoToggle
-//                           .setClickable(true);
-//               });
+//                getActivity().runOnUiThread(() -> localVideoToggle.setClickable(true));
 //            });
         });
 
-        remoteAudioToggle.setOnClickListener(v -> {
-//            appInstance.toggleDisableRemoteAudio();
-        });
-
-        remoteVideoToggle.setOnClickListener(v -> {
-//            appInstance.toggleDisableRemoteVideo();
-        });
+//        remoteAudioToggle.setOnClickListener(view -> appInstance.toggleDisableRemoteAudio());
+//        remoteVideoToggle.setOnClickListener(view -> appInstance.toggleDisableRemoteVideo());
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Muting stream options";

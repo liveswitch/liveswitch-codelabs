@@ -6,6 +6,7 @@ import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.application.HelloWorldLogic;
+
 import fm.liveswitch.SourceInput;
 
 public class DeviceSwitchingFragment extends Fragment {
@@ -24,15 +26,12 @@ public class DeviceSwitchingFragment extends Fragment {
     private HelloWorldLogic appInstance;
 
     public DeviceSwitchingFragment() {
-        // Required empty public constructor
     }
-
 
     // TODO: Rename and change types and number of parameters
     public static DeviceSwitchingFragment newInstance() {
         DeviceSwitchingFragment fragment = new DeviceSwitchingFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        fragment.setArguments(new Bundle());
         return fragment;
     }
 
@@ -42,9 +41,8 @@ public class DeviceSwitchingFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment.
         appInstance = HelloWorldLogic.getInstance(getActivity().getBaseContext());
         return inflater.inflate(R.layout.fragment_device_switching, container, false);
     }
@@ -55,7 +53,7 @@ public class DeviceSwitchingFragment extends Fragment {
         setUpDevices();
     }
 
-    private <Type> void setUpDropDown(Type sourceList[], int id, AdapterView.OnItemSelectedListener actionClick) {
+    private <Type> void setUpDropDown(Type[] sourceList, int id, AdapterView.OnItemSelectedListener actionClick) {
         Context context = getContext();
         getView().post(() -> {
             Spinner dropDown = (Spinner) getView().findViewById(id);
@@ -65,7 +63,7 @@ public class DeviceSwitchingFragment extends Fragment {
         });
     }
 
-    public void setVideoInputsDropDown(SourceInput[] sourceList, AdapterView.OnItemSelectedListener actionClick){
+    public void setVideoInputsDropDown(SourceInput[] sourceList, AdapterView.OnItemSelectedListener actionClick) {
         setUpDropDown(sourceList, R.id.videoInputs, actionClick);
     }
 
@@ -73,33 +71,33 @@ public class DeviceSwitchingFragment extends Fragment {
         setUpDropDown(sourceList, R.id.audioOutputs, actionClick);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Device Switching";
     }
 
     private void loadVideoInputsToUI() {
-
-//        if(appInstance.getLocalMedia() != null) {
+//        if (appInstance.getLocalMedia() != null) {
 //            appInstance.getLocalMedia().getVideoSourceInputs().then(result -> {
-//                setVideoInputsDropDown(result,
-//                        new AdapterView.OnItemSelectedListener() {
-//                            @Override
-//                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                                appInstance.setVideoSourceInput((SourceInput) parent.getSelectedItem());
-//                            }
 //
-//                            @Override
-//                            public void onNothingSelected(AdapterView<?> parent) {
+//                setVideoInputsDropDown(result, new AdapterView.OnItemSelectedListener() {
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        appInstance.setVideoSourceInput((SourceInput) parent.getSelectedItem());
+//                    }
 //
-//                            }
-//                        });
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parent) {
+//                    }
+//                });
+//
 //            });
 //        }
     }
 
     private void loadAudioOutputsToUI() {
-//        setAudioOutputsDropDown(appInstance.getAudioSourceOutputs(), new AdapterView.OnItemSelectedListener() {
+//        setAudioOutputsDropDown(appInstance.getAudioOutputs(), new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                appInstance.setAudioSourceOutput(parent.getSelectedItem().toString());
@@ -107,18 +105,17 @@ public class DeviceSwitchingFragment extends Fragment {
 //
 //            @Override
 //            public void onNothingSelected(AdapterView<?> parent) {
-//
 //            }
 //        });
     }
 
-    private void setUpDevices(){
+    private void setUpDevices() {
         loadVideoInputsToUI();
         loadAudioOutputsToUI();
 
         AudioManager audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
-        // Registering callback for audio changes
+        // Registering callback for audio changes.
         audioManager.registerAudioDeviceCallback(new AudioDeviceCallback() {
             @Override
             public void onAudioDevicesAdded(AudioDeviceInfo[] addedDevices) {
