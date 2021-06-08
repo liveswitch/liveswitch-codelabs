@@ -27,7 +27,7 @@ namespace HelloWorld
         private readonly HelloWorldLogic _App;
         // </AppInstance>
         // <Broadcaster>
-        // private Participant _Client;
+        private Participant _Client;
         // </Broadcaster>
 
         public MainWindow()
@@ -209,24 +209,31 @@ namespace HelloWorld
 
         private async void MuteAudio_Click(object sender, RoutedEventArgs e)
         {
-            // <Mute Streams>
-            //await _App.ToggleMuteLocalAudio();
-            //Dispatcher.Invoke(() =>
+            // <Muting streams>
+            //if (_App.LocalMedia != null)
             //{
-            //    muteAudio.Content = (_App.LocalMedia.AudioMuted) ? "Unmute Audio" : "Mute Audio";
-            //})
-            // </Mute Streams>
+            //    await _App.ToggleMuteLocalAudio();
+            //    Dispatcher.Invoke(() =>
+            //    {
+            //        muteAudio.Content = (_App.LocalMedia.AudioMuted) ? "Unmute Audio" : "Mute Audio";
+            //    });
+            //}
+            // </Muting streams>
         }
 
         private async void MuteVideo_Click(object sender, RoutedEventArgs e)
         {
-            // <Mute Streams>
-            //await _App.ToggleMuteLocalVideo();
-            //Dispatcher.Invoke(() =>
+
+            // <Muting streams>
+            //if (_App.LocalMedia != null)
             //{
-            //    muteVideo.Content = (_App.LocalMedia.VideoMuted) ? "Unmute Video" : "Mute Video";
-            //});
-            // </Mute Streams>
+            //    await _App.ToggleMuteLocalVideo();
+            //    Dispatcher.Invoke(() =>
+            //    {
+            //        muteVideo.Content = (_App.LocalMedia.VideoMuted) ? "Unmute Video" : "Mute Video";
+            //    });
+            //}
+            // </Muting streams>
         }
 
         private void DisableRemoteAudio_Click(object sender, RoutedEventArgs e)
