@@ -47,6 +47,7 @@ namespace HelloWorld
 
             _App.SaveFile = (fileName, dataBytes) =>
             {
+                // <File Transfer>
                 //    Thread thread = new Thread(() =>
                 //    {
                 //        this.Dispatcher.Invoke(() =>
@@ -60,6 +61,7 @@ namespace HelloWorld
                 //    });
                 //    thread.Start();
                 //};
+                // </File Transfer>
 
             };
 
@@ -165,7 +167,7 @@ namespace HelloWorld
         private void Leave_Click(object sender, RoutedEventArgs e)
         {
             // <Unregistered>
-            //await _App.LeaveAsync();
+            // _App.LeaveAsync();
             //Dispatcher.Invoke(() =>
             //{
             //    ClearInputs();
