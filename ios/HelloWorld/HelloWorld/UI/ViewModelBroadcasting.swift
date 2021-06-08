@@ -4,7 +4,7 @@ import Foundation
 
 class ViewModelBroadcasting : ObservableObject {
     @Published var view: UIView
-    //@Published var appInstance: Participant?
+//    @Published var appInstance: Participant?
     @Published var message: String
     
     init() {
@@ -21,10 +21,9 @@ class ViewModelBroadcasting : ObservableObject {
     func start() {
 //        appInstance?.start(container: view).then(resolveActionBlock: {[self] (obj: Any?) in
 //            appInstance?.joinAsync()?.then(resolveActionBlock: {[self] (obj: Any?) in
-//                if(appInstance is Broadcaster) {
+//                if (appInstance is Broadcaster) {
 //                    updateMessage(message: "Broadcasting has started")
-//                }
-//                else {
+//                } else {
 //                    updateMessage(message: "Receiving/subscribing has started")
 //                }
 //            })?.fail(rejectActionBlock: {[self] (e: NSException?) in
@@ -39,10 +38,9 @@ class ViewModelBroadcasting : ObservableObject {
         let promise = FMLiveSwitchPromise()
 //        appInstance?.leaveAsync().then(resolveActionBlock: {[self] (obj: Any?) in
 //            appInstance?.stop().then(resolveActionBlock: {[self] (obj: Any?) in
-//                if(appInstance is Broadcaster) {
+//                if (appInstance is Broadcaster) {
 //                    updateMessage(message: "Broadcasting has successfully stopped")
-//                }
-//                else {
+//                } else {
 //                    updateMessage(message: "Receiving/subscribing has successfully stopped")
 //                }
 //                promise?.resolve(withResult: nil)

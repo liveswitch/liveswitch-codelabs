@@ -7,15 +7,17 @@ struct TextChannelUI: View {
     
     var body: some View {
         VStack {
-            ScrollView{
+            ScrollView {
                 Text(model.chatMessages)
                     .padding()
             }
             TextField("Enter message",
                       text: $userMessage,
                       onCommit: {
+                        // <TextChannel>
 //                        model.appInstance.sendMessage(message: userMessage)
 //                        userMessage = ""
+                        // </TextChannel>
                       })
                 .padding()
         }

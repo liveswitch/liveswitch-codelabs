@@ -9,8 +9,8 @@ struct DeviceSwitchingUI: View {
     
     var body: some View {
         VStack {
-            if(showDeviceSwitchingUI){
-                HStack{
+            if (showDeviceSwitchingUI) {
+                HStack {
                     VStack {
                         Button("Audio source inputs") {
                             toggleAudioInputs.toggle()
@@ -18,12 +18,14 @@ struct DeviceSwitchingUI: View {
                         .aspectRatio(1.5, contentMode: .fill)
                         .padding()
                         if toggleAudioInputs {
+                            // <DeviceSwitching>
 //                            List(model.getCurrentAudioInputs(), id: \.id){ audioInput in
-//                                Button(String(describing: audioInput.name)){
+//                                Button(String(describing: audioInput.name)) {
 //                                    model.appInstance.setAudioSourceInput(sourceInputId: audioInput.id)
 //                                }
 //                            }
 //                            .padding()
+                            // </DeviceSwitching>
                         }
                     }
                     .aspectRatio(1.25, contentMode: .fill)
@@ -35,18 +37,20 @@ struct DeviceSwitchingUI: View {
                         .aspectRatio(1.5, contentMode: .fill)
                         .padding()
                         if toggleVideoInputs {
+                            // <DeviceSwitching>
 //                            List(model.getCurrentVideoInputs(), id: \.id){ videoInput in
-//                                Button(String(describing: videoInput.name)){
+//                                Button(String(describing: videoInput.name)) {
 //                                    model.appInstance.setVideoSourceInput(sourceInputId: videoInput.id)
 //                                }
 //                            }
 //                            .padding()
+                            // </DeviceSwitching>
                         }
                     }
                     .aspectRatio(1.25, contentMode: .fill)
                     .border(Color.orange)
                     
-                    VStack{
+                    VStack {
                         Text("Audio source outputs")
                             .padding()
                             .foregroundColor(Color.blue)
@@ -59,13 +63,12 @@ struct DeviceSwitchingUI: View {
                         
                         Divider().background(Color.black)
                         
-//                        Button("Speaker"){
+//                        Button("Speaker") {
 //                            model.appInstance.setAudioToSpeaker()
 //                        }
 //                        .foregroundColor(Color.black)
 //                        .padding()
 //                        .scaledToFill()
-                        
                     }
                     .aspectRatio(1.25, contentMode: .fill)
                     .border(Color.orange)

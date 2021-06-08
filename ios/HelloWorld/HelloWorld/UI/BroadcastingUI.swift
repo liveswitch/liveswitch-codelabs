@@ -10,7 +10,8 @@ struct BroadcastingUI: View {
         VStack {
             HStack {
                 Button("Broadcast") {
-//                    if(model.appInstance is Receiver) {
+                    // <Broadcasting>
+//                    if (model.appInstance is Receiver) {
 //                        model.stop()
 //                    }
 //
@@ -18,6 +19,7 @@ struct BroadcastingUI: View {
 //                    model.start()
 //                    broadcastDisabled = true
 //                    receiverDisabled = !broadcastDisabled
+                    // </Broadcasting>
                     
                 }
                 .padding()
@@ -25,7 +27,8 @@ struct BroadcastingUI: View {
                 Text(model.message)
                     .padding()
                 Button("Subscribe") {
-//                    if(model.appInstance is Broadcaster) {
+                    // <Broadcasting>
+//                    if (model.appInstance is Broadcaster) {
 //                        model.stop()
 //                    }
 //
@@ -33,6 +36,7 @@ struct BroadcastingUI: View {
 //                    model.start()
 //                    receiverDisabled = true
 //                    broadcastDisabled = !receiverDisabled
+                    // </Broadcasting>
                 
                 }
                 .padding()

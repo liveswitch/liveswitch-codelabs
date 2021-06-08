@@ -6,7 +6,9 @@ struct FileSendUI: View {
     
     var body: some View {
         Button("Send File") {
+            // <FileTransfer>
 //            showDirectory = .sendFile
+            // </FileTransfer>
         }
         .padding()
         .background(Color.gray)
@@ -19,7 +21,8 @@ struct FileSaveUI: View {
     @Binding var showDirectory: FileMode?
     
     var body: some View {
-//        if(model.onFileReceiveState) {
+        // <FileTransfer>
+//        if (model.onFileReceiveState) {
 //            Text("New file detected, download?")
 //                .padding()
 //            HStack {
@@ -35,10 +38,11 @@ struct FileSaveUI: View {
 //            }
 //            .padding()
 //            .border(Color.orange)
-//        } else {
-                EmptyView()
-            
 //        }
+//        else {
+            EmptyView()
+//        }
+        // </FileTransfer>
     }
 }
 
@@ -50,13 +54,11 @@ let supportedTypes = [UTType.image, UTType.text, UTType.plainText, UTType.utf8Pl
 
 
 struct SaveFilePicker: UIViewControllerRepresentable {
-    
     var initialURL: [URL]
     var fileData: Data
     var fileName: String
     
     init(fileData: Data, fileName: String) {
-        
         self.initialURL = [FileManager.default.urls(for: .documentDirectory, in: .allDomainsMask)[0].appendingPathComponent(fileName)]
         self.fileData = fileData
         self.fileName = fileName
@@ -67,14 +69,14 @@ struct SaveFilePicker: UIViewControllerRepresentable {
         return SaveFileCoordinator(initialURL: self.initialURL[0])
     }
     
-    
     func makeUIViewController(context: UIViewControllerRepresentableContext<SaveFilePicker>) ->
     UIDocumentPickerViewController {
         let controller: UIDocumentPickerViewController
-        if(!FileManager.default.fileExists(atPath: initialURL[0].absoluteString)) {
+        if (!FileManager.default.fileExists(atPath: initialURL[0].absoluteString)) {
             do {
                 try fileData.write(to: initialURL[0])
-            } catch let error {
+            }
+            catch let error {
                 print(error.localizedDescription)
             }
         }
@@ -108,7 +110,6 @@ class SaveFileCoordinator: NSObject, UIDocumentPickerDelegate, UINavigationContr
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {}
 }
-
 
 struct SendFilePicker: UIViewControllerRepresentable {
     
@@ -144,8 +145,11 @@ class SendFileCoordinator: NSObject, UIDocumentPickerDelegate, UINavigationContr
         var fileBytes: Data?
         do {
             try fileBytes = Data(contentsOf: fileURL)
+            // <FileTransfer>
             // appInstance.sendDataBytes(fileName: fileName, fileNameSize: fileSize, fileBytes: fileBytes!)
-        } catch let error {
+            // </FileTransfer>
+        }
+        catch let error {
             print(error.localizedDescription)
         }
     }

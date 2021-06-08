@@ -5,7 +5,9 @@ class ViewModel : ObservableObject {
     
     @Published var view: UIView
     @Published var message: String
+    // <LogicInstance>
     @Published var appInstance: HelloWorldLogic
+    // </LogicInstance>
     @Published var chatMessages: String
     
     // <FileTransfer>
@@ -18,12 +20,14 @@ class ViewModel : ObservableObject {
         view = UIView()
         message = ""
         chatMessages = ""
+        // <LogicInstance>
         appInstance = HelloWorldLogic.instance
+        // </LogicInstance>
         onFileReceiveState = false
         
         // <FileTransfer>
-//        currentFileData = HelloWorldLogic.instance.getDataBytes()
-//        currentFileName = HelloWorldLogic.instance.getFileName()
+//        currentFileData = HelloWorldLogicFile.instance.getDataBytes()
+//        currentFileName = HelloWorldLogicFile.instance.getFileName()
 //        appInstance.setOnFileReceiveAction(action: onFileReceive)
         // </FileTransfer>
     }
@@ -72,7 +76,7 @@ class ViewModel : ObservableObject {
     }
     
     // <DeviceSwitching>
-    func getCurrentVideoInputs() -> [SourceOption]{
+    func getCurrentVideoInputs() -> [SourceOption] {
         var currentVideoInputs: [SourceOption] = []
         
 //        appInstance.localMedia?.getVideoSourceInputs().then(resolveActionBlock: {(result: Any?) in
@@ -84,7 +88,7 @@ class ViewModel : ObservableObject {
         return currentVideoInputs
     }
     
-    func getCurrentAudioInputs() -> [SourceOption]{
+    func getCurrentAudioInputs() -> [SourceOption] {
         var currentAudioInputs: [SourceOption] = []
         
 //        appInstance.localMedia?.getAudioSourceInputs()?.then(resolveActionBlock: {(result: Any?) in
@@ -110,17 +114,15 @@ class ViewModel : ObservableObject {
     // </TextChannel>
  
     // <FileTransfer>
-    
     func onFileReceive() -> Void {
 //        let newData = appInstance.getDataBytes()
 //        let newFileName = appInstance.getFileName()
 //
-//        if(newData != currentFileData && newFileName != currentFileName){
+//        if (newData != currentFileData && newFileName != currentFileName) {
 //            currentFileData = newData
 //            currentFileName = newFileName
 //            setFileReceiveState(state: true)
-//        }
-//        else {
+//        } else {
 //            setFileReceiveState(state: false)
 //        }
     }
@@ -138,3 +140,5 @@ struct SourceOption: Identifiable {
     var id: String
     var name: String
 }
+
+

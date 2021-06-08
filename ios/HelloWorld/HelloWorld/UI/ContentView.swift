@@ -1,20 +1,25 @@
 
 import SwiftUI
 
-struct Content: View {
-    
+struct Content: View
+{
     @ObservedObject var model: ViewModel
     
-    var body: some View {
-        VStack {
-            HStack {
-                Button("Join") {
+    var body: some View
+    {
+        VStack
+        {
+            HStack
+            {
+                Button("Join")
+                {
                     model.start()
                 }
                 .padding()
                 Text(model.message)
                     .padding()
-                Button("Leave"){
+                Button("Leave")
+                {
                     model.stop()
                 }
                 .padding()
@@ -37,7 +42,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             HStack {
-                if(enableBroadcast) {
+                if (enableBroadcast) {
                     BroadcastingUI(model: modelBroadcasting)
                         .onAppear(perform: {
                             model.stop()
@@ -45,12 +50,10 @@ struct ContentView: View {
                         .onDisappear(perform: {
                             modelBroadcasting.stop()
                         })
-                }
-                else {
-                    if(enableTextChat) {
+                } else {
+                    if (enableTextChat) {
                         TextChannelUI(model: model)
-                    }
-                    else {
+                    } else {
                         Content(model: model)
                     }
                 }
@@ -65,7 +68,7 @@ struct ContentView: View {
                     FileSendUI(showDirectory: $fileMode)
                 }
             }
-            if(model.onFileReceiveState){
+            if (model.onFileReceiveState) {
                 FileSaveUI(model: model, showDirectory: $fileMode)
             }
             
