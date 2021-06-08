@@ -27,7 +27,7 @@ namespace HelloWorld
         private readonly HelloWorldLogic _App;
         // </AppInstance>
         // <Broadcaster>
-        private Participant _Client;
+        // private Participant _Client;
         // </Broadcaster>
 
         public MainWindow()
