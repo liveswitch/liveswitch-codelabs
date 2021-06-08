@@ -26,9 +26,9 @@ namespace HelloWorld
         // <AppInstance>
         private readonly HelloWorldLogic _App;
         // </AppInstance>
-		// <Broadcaster>
-        //private Participant _Client;
-		// </Broadcaster>
+        // <Broadcaster>
+        // private Participant _Client;
+        // </Broadcaster>
 
         public MainWindow()
         {
@@ -46,21 +46,21 @@ namespace HelloWorld
             };
 
             _App.SaveFile = (fileName, dataBytes) =>
-            {              
-            //    Thread thread = new Thread(() =>
-            //    {
-            //        this.Dispatcher.Invoke(() =>
-            //        {
-            //            var result = MessageBox.Show($"You've received a file from this channel, do you wish to download {fileName}?", "Download File", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            //            if (result == MessageBoxResult.Yes)
-            //            {
-            //                PromptSaveFile(fileName, dataBytes);
-            //            }
-            //        });
-            //    });
-            //    thread.Start();
-            //};
-               
+            {
+                //    Thread thread = new Thread(() =>
+                //    {
+                //        this.Dispatcher.Invoke(() =>
+                //        {
+                //            var result = MessageBox.Show($"You've received a file from this channel, do you wish to download {fileName}?", "Download File", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                //            if (result == MessageBoxResult.Yes)
+                //            {
+                //                PromptSaveFile(fileName, dataBytes);
+                //            }
+                //        });
+                //    });
+                //    thread.Start();
+                //};
+
             };
 
             InitializeComponent();
@@ -70,34 +70,23 @@ namespace HelloWorld
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // <Unregistered>
-            // _App.LeaveAsync()?.Fail((ex) =>
-            // {
-            //     Log.Error("Failed to leave conference.");
-            //     Alert(ex.Message);
-            // });
+            //_App.LeaveAsync();
             // </Unregistered>
 
             // <Stop Local Media>
-            // if (_App.LocalMedia != null)
-            // {
-            //     _App.StopLocalMedia().Then(p =>
-            //     {
-            //         Log.Info("Successfully stopped local media.");
-            //     }).Fail((ex) =>
-            //     {
-            //         Log.Error("Could not stop local media.");
-            //         Alert(ex.Message);
-            //     });
-            // }
+            //if (_App.LocalMedia != null)
+            //{
+            //    _ = _App.StopLocalMedia();
+            //}
             // </Stop Local Media>
-			
-			// <Broadcaster>
+
+            // <Broadcaster>
             // if (_Client != null)
             // {
             //     _Client.Stop();
             // }
-			// </Broadcaster>
-            
+            // </Broadcaster>
+
         }
 
         private void SendMessage_Click(object sender, RoutedEventArgs e)
@@ -127,7 +116,7 @@ namespace HelloWorld
 
         private void PromptSaveFile(string fileName, byte[] dataBytes)
         {
-            
+
             string[] tokens = fileName.Split('.');
             fileName = tokens[0];
             for (var i = 1; i < tokens.Length - 1; i++)
@@ -153,130 +142,90 @@ namespace HelloWorld
                     }
                 }
             });
-            
+
         }
 
-        private void Join_Click(object sender, RoutedEventArgs e)
+        private async void Join_Click(object sender, RoutedEventArgs e)
         {
             // <Start Local Media>
-            // _App.StartLocalMedia(this).Then((result) =>
-            // {
-            //     LoadInputs();
+            //await _App.StartLocalMedia(this);
+            //LoadInputs();
+            // </Start Local Media>
 
-            // </Start Local Media>
             // <Joining>
-            _App.JoinAsync().Then((res) => {
-                Dispatcher.Invoke(() =>
-                {
-                    join.Visibility = Visibility.Collapsed;
-                    leave.Visibility = Visibility.Visible;
-                });
+            await _App.JoinAsync();
+            Dispatcher.Invoke(() =>
+            {
+                join.Visibility = Visibility.Collapsed;
+                leave.Visibility = Visibility.Visible;
             });
-            // <Joining>
-            // <Start Local Media>
-            // }, (ex) =>
-            //     {
-            //         Log.Info("Could not start local media.");
-            //         Alert(ex.Message);
-            //     }
-            // ).Fail((ex) =>
-            // {
-            //     Log.Error("Could not join conference.");
-            //     Alert(ex.Message);
-            // });
-            // </Start Local Media>
+            // </Joining>
         }
 
         private void Leave_Click(object sender, RoutedEventArgs e)
         {
             // <Unregistered>
-            // _App.LeaveAsync().Then((result) => {
-            //     Dispatcher.Invoke(() =>
-            //     {
-            //         ClearInputs();
-            //         join.Visibility = Visibility.Visible;
-            //         leave.Visibility = Visibility.Collapsed;
-            //     });
-            // }).Fail((ex) =>
-            // {
-            //     Log.Error("Failed to leave conference.");
-            //     Alert(ex.Message);
-            // });
+            //await _App.LeaveAsync();
+            //Dispatcher.Invoke(() =>
+            //{
+            //    ClearInputs();
+            //    join.Visibility = Visibility.Visible;
+            //    leave.Visibility = Visibility.Collapsed;
+            //});
             // </Unregistered>
 
             // <Stop Local Media>
-            // if (_App.LocalMedia != null)
-            // {
-            //     _App.StopLocalMedia().Then(p =>
-            //     {
-            //         Log.Info("Successfully stopped local media.");
-            //     }).Fail((ex) =>
-            //     {
-            //         Log.Error("Could not stop local media.");
-            //         Alert(ex.Message);
-            //     });
-            // }
+            //if (_App.LocalMedia != null)
+            //{
+            //    _App.StopLocalMedia();
+            //}
             // </Stop Local Media>
         }
 
-        private void JoinReceive_Click(object sender, RoutedEventArgs e)
+        private async void JoinReceive_Click(object sender, RoutedEventArgs e)
         {
             // <Broadcaster>
-            // _Client = Receiver.Instance();
-            // _Client.Start(this).Then((result) =>
-            // {
-            //     _Client.JoinAsync();
-            // }).Fail((ex) =>
-            // {
-            //     Log.Error("Unable to start Client.");
-            //     Alert(ex.Message);
-            // });
+            //_Client = Receiver.Instance();
+            //await _Client.Start(this);
+            //await _Client.JoinAsync();
             // </Broadcaster>
         }
 
-        private void JoinBroadcast_Click(object sender, RoutedEventArgs e)
+        private async void JoinBroadcast_Click(object sender, RoutedEventArgs e)
         {
             // <Receiver>
-            // _Client = Broadcaster.Instance();
-            // _Client.Start(this).Then((result) =>
-            // {
-            //     _Client.JoinAsync();
-            // }).Fail((ex) =>
-            // {
-            //     Log.Error("Unable to start Client.");
-            //     Alert(ex.Message);
-            // });
+            //_Client = Broadcaster.Instance();
+            //await _Client.Start(this);
+            //await _Client.JoinAsync();
             // </Receiver>
         }
 
-        private void ToggleScreenShare_Click(object sender, RoutedEventArgs e)
+        private async void ToggleScreenShare_Click(object sender, RoutedEventArgs e)
         {
             // <ScreenShare>
-            //_App.ToggleScreenShare();
+            //await _App.ToggleScreenShare();
             // </ScreenShare>
         }
 
-        private void MuteAudio_Click(object sender, RoutedEventArgs e)
+        private async void MuteAudio_Click(object sender, RoutedEventArgs e)
         {
             // <Mute Streams>
-            // _App.ToggleMuteLocalAudio().Then((r) => {
-            //     this.Dispatcher.Invoke(() =>
-            //     {
-            //         this.muteAudio.Content = (_App.LocalMedia.AudioMuted) ? "Unmute Audio" : "Mute Audio";
-            //     });
-            // });
+            //await _App.ToggleMuteLocalAudio();
+            //Dispatcher.Invoke(() =>
+            //{
+            //    muteAudio.Content = (_App.LocalMedia.AudioMuted) ? "Unmute Audio" : "Mute Audio";
+            //})
             // </Mute Streams>
         }
 
-        private void MuteVideo_Click(object sender, RoutedEventArgs e)
+        private async void MuteVideo_Click(object sender, RoutedEventArgs e)
         {
             // <Mute Streams>
-            // _App.ToggleMuteLocalVideo().Then((r) => {
-            //     this.Dispatcher.Invoke(() =>
-            //     {
-            //         this.muteVideo.Content = (_App.LocalMedia.VideoMuted) ? "Unmute Video" : "Mute Video";
-            //     });
-            // });
+            //await _App.ToggleMuteLocalVideo();
+            //Dispatcher.Invoke(() =>
+            //{
+            //    muteVideo.Content = (_App.LocalMedia.VideoMuted) ? "Unmute Video" : "Mute Video";
+            //});
             // </Mute Streams>
         }
 
@@ -329,42 +278,42 @@ namespace HelloWorld
         private void LoadInputs()
         {
             // <Change Devices>
-            // _App.GetAudioInputs().Then((AudioInputs) =>
-            // {
-            //     foreach (SourceInput input in AudioInputs)
-            //     {
-            //         this.Dispatcher.Invoke(() =>
-            //         {
-            //             this.audioInputs.Items.Add(input);
-            //         });
-            //     }
-            //     this.Dispatcher.Invoke(() => this.audioInputs.SelectedIndex = 0);
-            // });
-            // _App.GetVideoInputs().Then((VideoInputs) =>
-            // {
-            //     foreach (SourceInput input in VideoInputs)
-            //     {
-            //         this.Dispatcher.Invoke(() =>
-            //         {
-            //             this.videoInputs.Items.Add(input);
-            //         });
-            //     }
-            //     this.Dispatcher.Invoke(() => this.videoInputs.SelectedIndex = 0);
-            // });
-            // this.Dispatcher.Invoke(() =>
-            // {
-            //     _App.GetAudioOutputs().Then((AudioOutputs) =>
-            //     {
-            //         foreach (SinkOutput output in AudioOutputs)
-            //         {
-            //             this.Dispatcher.Invoke(() =>
-            //             {
-            //                 this.audioOutputs.Items.Add(output);
-            //             });
-            //         }
-            //     });
-            //     this.Dispatcher.Invoke(() => this.audioOutputs.SelectedIndex = 0);
-            // });
+            //_App.GetAudioInputs().Then((AudioInputs) =>
+            //{
+            //    foreach (SourceInput input in AudioInputs)
+            //    {
+            //        this.Dispatcher.Invoke(() =>
+            //        {
+            //            this.audioInputs.Items.Add(input);
+            //        });
+            //    }
+            //    this.Dispatcher.Invoke(() => this.audioInputs.SelectedIndex = 0);
+            //});
+            //_App.GetVideoInputs().Then((VideoInputs) =>
+            //{
+            //    foreach (SourceInput input in VideoInputs)
+            //    {
+            //        this.Dispatcher.Invoke(() =>
+            //        {
+            //            this.videoInputs.Items.Add(input);
+            //        });
+            //    }
+            //    this.Dispatcher.Invoke(() => this.videoInputs.SelectedIndex = 0);
+            //});
+            //this.Dispatcher.Invoke(() =>
+            //{
+            //    _App.GetAudioOutputs().Then((AudioOutputs) =>
+            //    {
+            //        foreach (SinkOutput output in AudioOutputs)
+            //        {
+            //            this.Dispatcher.Invoke(() =>
+            //            {
+            //                this.audioOutputs.Items.Add(output);
+            //            });
+            //        }
+            //    });
+            //    this.Dispatcher.Invoke(() => this.audioOutputs.SelectedIndex = 0);
+            //});
             // </Change Devices>
         }
 
@@ -376,7 +325,7 @@ namespace HelloWorld
             // this.audioOutputs.Items.Clear();
             // </Change Devices>
         }
-        public void Alert(string format, params object[] args)
+        private void Alert(string format, params object[] args)
         {
             Dispatcher.Invoke(new Action(() =>
             {
