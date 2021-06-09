@@ -26,8 +26,8 @@ class ViewModel : ObservableObject {
         onFileReceiveState = false
         
         // <FileTransfer>
-//        currentFileData = HelloWorldLogicFile.instance.getDataBytes()
-//        currentFileName = HelloWorldLogicFile.instance.getFileName()
+//        currentFileData = HelloWorldLogic.instance.getDataBytes()
+//        currentFileName = HelloWorldLogic.instance.getFileName()
 //        appInstance.setOnFileReceiveAction(action: onFileReceive)
         // </FileTransfer>
     }
@@ -79,7 +79,7 @@ class ViewModel : ObservableObject {
     func getCurrentVideoInputs() -> [SourceOption] {
         var currentVideoInputs: [SourceOption] = []
         
-//        appInstance.localMedia?.getVideoSourceInputs().then(resolveActionBlock: {(result: Any?) in
+//        appInstance._localMedia?.getVideoSourceInputs().then(resolveActionBlock: {(result: Any?) in
 //            currentVideoInputs = (result as! [FMLiveSwitchSourceInput]).map{ input in
 //                SourceOption(id: input.id(), name: input.description())
 //            }
@@ -91,7 +91,7 @@ class ViewModel : ObservableObject {
     func getCurrentAudioInputs() -> [SourceOption] {
         var currentAudioInputs: [SourceOption] = []
         
-//        appInstance.localMedia?.getAudioSourceInputs()?.then(resolveActionBlock: {(result: Any?) in
+//        appInstance._localMedia?.getAudioSourceInputs()?.then(resolveActionBlock: {(result: Any?) in
 //            currentAudioInputs = (result as! [FMLiveSwitchSourceInput]).map{input in
 //                SourceOption(id: input.id(), name: input.description())
 //            }
