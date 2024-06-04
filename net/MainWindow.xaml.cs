@@ -75,12 +75,12 @@ namespace HelloWorld
             //_App.LeaveAsync();
             // </Unregistered>
 
-            // <Stop Local Media>
+            // <LocalMedia>
             //if (_App.LocalMedia != null)
             //{
             //    _ = _App.StopLocalMedia();
             //}
-            // </Stop Local Media>
+            // </LocalMedia>
 
             // <Broadcaster>
             // if (_Client != null)
@@ -149,10 +149,10 @@ namespace HelloWorld
 
         private async void Join_Click(object sender, RoutedEventArgs e)
         {
-            // <Start Local Media>
+            // <LocalMedia>
             //await _App.StartLocalMedia(this);
             //LoadInputs();
-            // </Start Local Media>
+            // </LocalMedia>
 
             // <Joining>
             await _App.JoinAsync();
@@ -176,12 +176,12 @@ namespace HelloWorld
             //});
             // </Unregistered>
 
-            // <Stop Local Media>
+            // <LocalMedia>
             //if (_App.LocalMedia != null)
             //{
             //    _App.StopLocalMedia();
             //}
-            // </Stop Local Media>
+            // </LocalMedia>
         }
 
         private async void JoinReceive_Click(object sender, RoutedEventArgs e)

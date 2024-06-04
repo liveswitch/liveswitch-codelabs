@@ -35,9 +35,9 @@
     const leaveBtn: HTMLButtonElement = document.getElementById("leave-btn") as HTMLButtonElement;
 
     joinBtn.onclick = () => {
-        // <Start Local Media>
+        // <LocalMedia>
            //app.startLocalMedia().then(() => {
-        // </Start Local Media>
+        // </LocalMedia>
             loadInputs();
 
             // Create and register the client.
@@ -45,15 +45,15 @@
                 joinBtn.style.display = "none";
                 leaveBtn.style.display = "inline-block";
             });
-        // <Start Local Media>
+        // <LocalMedia>
            //});
-        // </Start Local Media>
+        // </LocalMedia>
     };
 
     leaveBtn.onclick = () => {
-        // <Stop Local Media>
+        // <LocalMedia>
            //app.stopLocalMedia().then(() => {
-        // </Stop Local Media>
+        // </LocalMedia>
         // <Unregister>             
             //app.leaveAsync().then(() => {
             //    clearInputs();
@@ -61,9 +61,9 @@
             //    leaveBtn.style.display = "none";
             //});
         // </Unregister>
-         // <Stop Local Media>
+         // <LocalMedia>
            //});
-        // </Stop Local Media>
+        // </LocalMedia>
     };
     
     	
